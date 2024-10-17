@@ -50,14 +50,17 @@ jobs:
     name: Build and publish Python Package
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK 1.11
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java
         uses: actions/setup-java@v3
         with:
           distribution: "temurin"
           java-version: "21"
 
-      - uses: er28-0652/setup-ghidra@master
+      - name: Set up Ghidra
+        uses: er28-0652/setup-ghidra@master
         with:
           version: "${{ needs.set-versions.outputs.ghidra-ver }}"
 
@@ -71,7 +74,7 @@ jobs:
           test -f setup.py # check manually, because analyzeHeadless doesn't fail on script failure
           test -d ghidra-stubs
 
-      - name: Set up Python 3.11
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: 3.11
